@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="projects-container" style="padding: 100px 20px; text-align: center;">
+    <h1>Projects</h1>
+    <div class="country-list"
+        style="margin-top: 50px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+        {% for country in countries %}
+        <div class="country-item">
+            <a href="{% url 'project_list_by_country' country %}"
+                style="font-size: 2rem; color: #333; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color 0.3s;">
+                {{ country }}
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .country-item {
+        transition: transform 0.3s ease;
+    }
+
+    .country-item:hover {
+        transform: scale(1.2);
+    }
+</style>
+{% endblock %}

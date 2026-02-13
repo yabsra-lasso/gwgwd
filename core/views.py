@@ -1,0 +1,40 @@
+from django.shortcuts import render, get_object_or_404
+from .models import Artwork, Artist, Activity
+
+def home(request):
+    latest_activities = Activity.objects.all()[:3]
+    return render(request, 'core/home.html', {'latest_activities': latest_activities})
+
+def projects(request):
+    # Get list of countries from choices
+    countries = [choice[0] for choice in Artwork.CATEGORY_CHOICES]
+    return render(request, 'core/projects.html', {'countries': countries})
+
+def project_list_by_country(request, category):
+    artworks = Artwork.objects.filter(category=category)
+    return render(request, 'core/project_list.html', {'artworks': artworks, 'category': category})
+
+def artwork_detail(request, pk):
+    artwork = get_object_or_404(Artwork, pk=pk)
+    return render(request, 'core/artwork_detail.html', {'artwork': artwork})
+
+def about(request):
+    team_leaders = Artist.objects.filter(role='Team Leader')
+    researchers = Artist.objects.exclude(role='Team Leader')
+    return render(request, 'core/about.html', {
+        'team_leaders': team_leaders,
+        'researchers': researchers
+    })
+
+def activity_list(request):
+    activities = Activity.objects.all()
+    return render(request, 'core/activity_list.html', {'activities': activities})
+
+
+def activity_detail(request, slug):
+    activity = get_object_or_404(Activity, slug=slug)
+    return render(request, 'core/activity_detail.html', {'activity': activity})
+
+def artist_detail(request, pk):
+    artist = get_object_or_404(Artist, pk=pk)
+    return render(request, 'core/artist_detail.html', {'artist': artist})

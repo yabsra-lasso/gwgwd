@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section class="works-wrapper" style="margin-top: 100px;">
+    <!-- Sidebar with Artist Info -->
+    <aside class="artist-sidebar">
+        {% if artwork.artist %}
+        <div class="artist-profile" style="display: block;">
+            {% if artwork.artist.photo %}
+            <div class="artist-photo">
+                <img src="{{ artwork.artist.photo.url }}" alt="{{ artwork.artist.name }}">
+            </div>
+            {% endif %}
+            <h3>{{ artwork.artist.name }}</h3>
+            {% if artwork.artist.website %}
+            <p style="margin-bottom: 1rem;"><a href="{{ artwork.artist.website }}" target="_blank"
+                    style="color: #8B5E3C; text-decoration: underline; font-size: 0.9rem;">Visit Website</a></p>
+            {% endif %}
+            <div class="artist-overview">
+                {{ artwork.artist.description|linebreaks }}
+            </div>
+        </div>
+        {% else %}
+        <div class="artist-profile" style="display: block;">
+            <p>Artist information not available.</p>
+        </div>
+        {% endif %}
+    </aside>
+
+    <!-- Main Content: Artwork -->
+    <div class="works-main">
+        <div class="artwork-detail">
+            <h1>{{ artwork.title }}</h1>
+
+            <div class="detail-media">
+                {% if artwork.image %}
+                <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}"
+                    style="width: 100%; height: auto; display: block; margin-bottom: 2rem;">
+                {% elif artwork.video %}
+                <video controls style="width: 100%; height: auto; display: block; margin-bottom: 2rem;">
+                    <source src="{{ artwork.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                {% endif %}
+            </div>
+
+            <div class="detail-info">
+                <p><strong>Category:</strong> {{ artwork.category }}</p>
+                {% if artwork.description %}
+                <div class="description">
+                    {{ artwork.description|linebreaks }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="back-link" style="margin-top: 2rem;">
+                <a href="{% url 'project_list_by_country' artwork.category %}">&larr;
+                    Back to {{ artwork.category }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

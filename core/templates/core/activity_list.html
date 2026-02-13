@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="activities-page">
+    <div class="container">
+        <h1>Activities</h1>
+        <div class="activity-timeline">
+            {% for activity in activities %}
+            <div class="activity-item">
+                <div class="activity-date">{{ activity.date|date:"F j, Y" }}</div>
+                <div class="activity-content">
+                    <h2><a href="{% url 'activity_detail' activity.slug %}">{{ activity.title }}</a></h2>
+                    {% if activity.image %}
+                    <div class="activity-image">
+                        <img src="{{ activity.image.url }}" alt="{{ activity.title }}">
+                    </div>
+                    {% endif %}
+                    <p>{{ activity.description|truncatewords:30 }}</p>
+                    <a href="{% url 'activity_detail' activity.slug %}" class="read-more">Read More &rarr;</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No activities found.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

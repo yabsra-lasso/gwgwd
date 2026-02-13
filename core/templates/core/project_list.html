@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section class="page-header" style="text-align: center; margin-top: 100px;">
+    <h1>Projects in {{ category }}</h1>
+    <a href="{% url 'projects' %}" style="display: block; margin-top: 10px; color: #666; text-decoration: none;">&larr;
+        All Countries</a>
+</section>
+
+<section class="works-container" style="max-width: 1200px; margin: 4rem auto; padding: 0 2rem;">
+    <div class="works-grid">
+        {% for artwork in artworks %}
+        <a href="{% url 'artwork_detail' artwork.pk %}" class="work-item-link">
+            <div class="work-item">
+                {% if artwork.image %}
+                <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
+                {% elif artwork.video %}
+                <video controls>
+                    <source src="{{ artwork.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                {% else %}
+                <div class="work-image-placeholder"></div>
+                {% endif %}
+
+                <div class="work-info">
+                    <h3>{{ artwork.title }}</h3>
+                    <p>{{ artwork.category }}</p>
+                    {% if artwork.description %}
+                    <p class="description">{{ artwork.description|truncatewords:20 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <p style="text-align: center;">No projects found in this category.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

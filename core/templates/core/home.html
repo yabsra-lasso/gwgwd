@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero">
+    <canvas id="particles-canvas"></canvas>
+    <div class="hero-content">
+        <h1><em>Gather Wood,</em><br><em>Gather Words</em></h1>
+        <p class="hero-text">Unfolding from the figure and gestures of gathering wood. A guiding movement for exploring
+            climate anxiety and disciplinary knowledge.</p>
+        <a href="{% url 'about' %}" class="btn">Read the Manifesto &rarr;</a>
+    </div>
+</section>
+
+<section class="quote-section">
+    <blockquote>
+        "The action of gathering branches and the figure of the fagot becomes an invitation to gather together
+        practices, imaginations and disciplinary knowledge in new ways to understand human action and consciousness in
+        the Anthropocene."
+    </blockquote>
+</section>
+
+<section class="philosophy">
+    <h2><em>The Project</em></h2>
+    <p class="subtitle">Focusing on gathering and bundling, moving from forest to sown field to factories.</p>
+
+    <div class="cards">
+        <div class="card">
+            <!-- <div class="card-icon">👋</div> -->
+            <h3>Tactile Labor</h3>
+            <p>The Sisyphean labors of country women who collect branches for their family cookstoves.</p>
+        </div>
+        <div class="card">
+            <!-- <div class="card-icon">📖</div> -->
+            <h3>Intellectual Practice</h3>
+            <p>Developing new relationships among diverse disciplines by focusing on a particular movement.</p>
+        </div>
+        <div class="card">
+            <!-- <div class="card-icon">🍃</div> -->
+            <h3>Climate Consciousness</h3>
+            <p>Exploring climate anxiety through the guiding image of gathering wood in the Anthropocene.</p>
+        </div>
+    </div>
+</section>
+
+</section>
+
+<section class="latest-activities">
+    <div class="container">
+        <div class="section-header">
+            <h2><em>Latest Activities</em></h2>
+            <p>Recent updates and events from the field.</p>
+        </div>
+        <div class="latest-grid">
+            {% for activity in latest_activities %}
+            <div class="latest-item">
+                <span class="activity-date">{{ activity.date|date:"M j" }}</span>
+                <div class="latest-content">
+                    <h3><a href="{% url 'activity_detail' activity.slug %}">{{ activity.title }}</a></h3>
+                    <p>{{ activity.description|truncatewords:20 }}</p>
+                    <a href="{% url 'activity_detail' activity.slug %}" class="read-more">Read &rarr;</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No recent activities.</p>
+            {% endfor %}
+        </div>
+        <div class="view-all-container">
+            <a href="{% url 'activity_list' %}" class="btn-secondary">View All Activities</a>
+        </div>
+    </div>
+</section>
+
+<section class="notes-field">
+    <div class="notes-content">
+        <h2><em>Visual Notes</em></h2>
+        <p>A collection of moving images.</p>
+    </div>
+    <div class="notes-image" style="background: none; padding: 0;">
+        <video autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            <source src="{% static 'core/img/IMG_1169.mov' %}" type="video/webm">
+            <source src="{% static 'core/img/IMG_1169.mov' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</section>
+
+<script src="{% static 'core/js/particles.js' %}"></script>
+{% endblock %}

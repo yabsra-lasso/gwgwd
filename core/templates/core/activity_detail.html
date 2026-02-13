@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="activity-detail-page">
+    <div class="container">
+        <article class="activity-full">
+            <header class="activity-header">
+                <div class="activity-meta">{{ activity.date|date:"F j, Y" }}</div>
+                <h1>{{ activity.title }}</h1>
+            </header>
+
+            {% if activity.image %}
+            <div class="activity-hero-image">
+                <img src="{{ activity.image.url }}" alt="{{ activity.title }}">
+            </div>
+            {% endif %}
+
+            <div class="activity-body">
+                {{ activity.description|linebreaks }}
+            </div>
+
+            {% if activity.video %}
+            <div class="activity-video">
+                <video controls>
+                    <source src="{{ activity.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            {% endif %}
+
+            <div class="activity-footer">
+                <a href="{% url 'activity_list' %}" class="back-link">&larr; Back to Activities</a>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}

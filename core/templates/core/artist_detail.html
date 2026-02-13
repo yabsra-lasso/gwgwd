@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section class="works-wrapper" style="margin-top: 100px;">
+    <!-- Sidebar with Artist Info -->
+    <aside class="artist-sidebar">
+        <div class="artist-profile" style="display: block;">
+            {% if artist.photo %}
+            <div class="artist-photo">
+                <img src="{{ artist.photo.url }}" alt="{{ artist.name }}">
+            </div>
+            {% endif %}
+            <h3>{{ artist.name }}</h3>
+            <div class="region-label">{{ artist.role }}</div>
+            {% if artist.website %}
+            <p style="margin-bottom: 1rem;"><a href="{{ artist.website }}" target="_blank"
+                    style="color: #8B5E3C; text-decoration: underline; font-size: 0.9rem;">Visit Website</a></p>
+            {% endif %}
+        </div>
+    </aside>
+
+    <!-- Main Content: Artist Bio/Description -->
+    <div class="works-main">
+        <div class="artwork-detail">
+            <h1 style="margin-bottom: 2rem;">About {{ artist.name }}</h1>
+
+            <div class="detail-info">
+                {% if artist.description %}
+                <div class="description" style="font-size: 1.1rem; line-height: 1.8; color: #444;">
+                    {{ artist.description|linebreaks }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="back-link" style="margin-top: 4rem;">
+                <a href="{% url 'about' %}">&larr; Back to Team</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

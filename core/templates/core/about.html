@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section class="page-header" style="margin-bottom: 3rem;">
+    <h1>About the Project</h1>
+</section>
+
+<section class="about-content">
+    <div class="text-block">
+        <p>“Gather Wood, Gather Words” focuses on and then unfolds from the figure and gestures of gathering wood. The
+            Sisyphean labors of country women in rural Morocco or Brazil or India who collect branches for their family
+            cookstoves become a guiding image/movement and point of departure for exploring climate anxiety. The action
+            of gathering branches and the figure of the fagot becomes an invitation to gather together practices,
+            imaginations and disciplinary knowledge in new ways to understand human action and consciousness in the
+            Anthropocene.</p>
+
+        <p>Our project asks whether rather than commencing with a concept or hypothesis, focus on a particular movement
+            can develop new relationships among diverse disciplines. We are attentive to the body in motion, to the
+            movements necessary to assemble wood or grain in bundles, texts in archives, or objects in museums. Focusing
+        <p>Gather Wood, Gather Words unfolds from the figure and gestures of gathering wood. It explores climate anxiety
+            and disciplinary knowledge through tactile labor and intellectual practice.</p>
+        <p>The project focuses on gathering and bundling, moving from forest to sown field to factories, tracing the
+            Sisyphean labors of country women who collect branches for their family cookstoves.</p>
+    </div>
+
+    <div class="researchers">
+        <h2>Project Leaders</h2>
+        {% if team_leaders %}
+        <ul>
+            {% for artist in team_leaders %}
+            <li><a href="{% url 'artist_detail' artist.pk %}" style="text-decoration: none; color: inherit;">{{
+                    artist.name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No project leaders found.</p>
+        {% endif %}
+    </div>
+
+    <div class="researchers">
+        <h2>Project Researchers</h2>
+        {% if researchers %}
+        <ul>
+            {% for artist in researchers %}
+            <li><a href="{% url 'artist_detail' artist.pk %}" style="text-decoration: none; color: inherit;">{{
+                    artist.name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No researchers found.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
