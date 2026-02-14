@@ -85,9 +85,12 @@ DATABASES = {
     }
 }
 
+# internal
 DATABASES['default'] = dj_database_url.parse("postgresql://gwgwd_user:s4Ztuxb86kWEHjjUoKnL3KkUPQhl1kvj@dpg-d6856rjnv86c73e7pf10-a/gwgwd")
 
-# postgresql://gwgwd_user:s4Ztuxb86kWEHjjUoKnL3KkUPQhl1kvj@dpg-d6856rjnv86c73e7pf10-a.oregon-postgres.render.com/gwgwd
+# external
+# DATABASES['default'] = dj_database_url.parse("postgresql://gwgwd_user:s4Ztuxb86kWEHjjUoKnL3KkUPQhl1kvj@dpg-d6856rjnv86c73e7pf10-a.oregon-postgres.render.com/gwgwd")
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
