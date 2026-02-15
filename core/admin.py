@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.contrib import admin
-from .models import Artwork, Artist, Activity
+from .models import Artwork, Artist, Activity, Country
 
 @admin.register(Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
-    list_display = ('title', 'artist', 'category', 'created_at')
-    list_filter = ('category', 'artist')
+    list_display = ('title', 'artist', 'country', 'created_at')
+    list_filter = ('country', 'artist')
     search_fields = ('title', 'artist__name')
 
 @admin.register(Artist)
@@ -16,3 +16,8 @@ class ArtistAdmin(admin.ModelAdmin):
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ('title', 'date')
     prepopulated_fields = {'slug': ('title',)}
+
+@admin.register(Country)
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+

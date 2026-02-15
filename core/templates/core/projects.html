@@ -6,12 +6,11 @@
     <div class="country-list"
         style="margin-top: 50px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
         {% for country in countries %}
-        <div class="country-item">
-            <a href="{% url 'project_list_by_country' country %}"
-                style="font-size: 2rem; color: #333; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color 0.3s;">
-                {{ country }}
-            </a>
-        </div>
+        <a href="{% url 'project_list_by_country' country.name %}" class="map-point point-{{ country.name|lower }}"
+            data-country="{{ country.name }}">
+            <div class="point-dot"></div>
+            <span class="point-label">{{ country.name }}</span>
+        </a>
         {% endfor %}
     </div>
 </div>

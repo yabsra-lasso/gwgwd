@@ -1,40 +1,56 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<section class="page-header" style="text-align: center; margin-top: 100px;">
-    <h1>Projects in {{ category }}</h1>
-    <a href="{% url 'projects' %}" style="display: block; margin-top: 10px; color: #666; text-decoration: none;">&larr;
-        All Countries</a>
-</section>
 
-<section class="works-container" style="max-width: 1200px; margin: 4rem auto; padding: 0 2rem;">
-    <div class="works-grid">
-        {% for artwork in artworks %}
-        <a href="{% url 'artwork_detail' artwork.pk %}" class="work-item-link">
-            <div class="work-item">
-                {% if artwork.image %}
-                <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
-                {% elif artwork.video %}
-                <video controls>
-                    <source src="{{ artwork.video.url }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                {% else %}
-                <div class="work-image-placeholder"></div>
-                {% endif %}
 
-                <div class="work-info">
-                    <h3>{{ artwork.title }}</h3>
-                    <p>{{ artwork.category }}</p>
-                    {% if artwork.description %}
-                    <p class="description">{{ artwork.description|truncatewords:20 }}</p>
-                    {% endif %}
-                </div>
+<section class="country-project-container"
+    style="max-width: 1400px; margin: 4rem auto; padding: 0 2rem; display: flex; gap: 4rem;">
+    <!-- Left Column: 30% -->
+    <div class="country-info" style="flex: 0 0 30%; width: 30%;">
+        <div class="sticky-content" style="position: sticky; top: 100px;">
+            <h1>{{ category }}</h1>
+            {% if country and country.description %}
+            <div class="country-description" style="margin-top: 1.5rem; font-size: 1.1rem; line-height: 1.6;">
+                {{ country.description|linebreaks }}
             </div>
-        </a>
-        {% empty %}
-        <p style="text-align: center;">No projects found in this category.</p>
-        {% endfor %}
+            {% endif %}
+
+            <a href="{% url 'projects' %}"
+                style="display: inline-block; margin-top: 2rem; color: #666; text-decoration: none; border-bottom: 1px solid #666;">&larr;
+                Back to Map</a>
+        </div>
+    </div>
+
+    <!-- Right Column: 70% -->
+    <div class="works-grid-container" style="flex: 0 0 70%; width: 70%;">
+        <div class="works-grid" style="grid-template-columns: repeat(2, 1fr);">
+            {% for artwork in artworks %}
+            <a href="{% url 'artwork_detail' artwork.pk %}" class="work-item-link">
+                <div class="work-item">
+                    {% if artwork.image %}
+                    <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
+                    {% elif artwork.video %}
+                    <video controls>
+                        <source src="{{ artwork.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% else %}
+                    <div class="work-image-placeholder"></div>
+                    {% endif %}
+
+                    <div class="work-info">
+                        <h3>{{ artwork.title }}</h3>
+                        <!-- <p>{{ artwork.country.name }}</p> -->
+                        {% if artwork.description %}
+                        <p class="description">{{ artwork.description|truncatewords:20 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <p>No projects found in this category.</p>
+            {% endfor %}
+        </div>
     </div>
 </section>
 {% endblock %}

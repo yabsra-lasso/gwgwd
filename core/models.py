@@ -1,18 +1,11 @@
 from django.db import models
 
 class Artwork(models.Model):
-    CATEGORY_CHOICES = [
-        ('USA', 'USA'),
-        ('Brazil', 'Brazil'),
-        ('Morocco', 'Morocco'),
-        ('India', 'India'),
-        ('UAE', 'UAE'),
-    ]
-
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     place = models.CharField(max_length=200, blank=True, null=True)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    # Link to Country (replacing category)
+    country = models.ForeignKey('Country', on_delete=models.SET_NULL, null=True, blank=True, related_name='artworks')
     # Link to Artist
     artist = models.ForeignKey('Artist', on_delete=models.SET_NULL, null=True, blank=True, related_name='artworks')
     image = models.ImageField(upload_to='artworks/images/', blank=True, null=True)
@@ -53,3 +46,15 @@ class Activity(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=100, unique=True, help_text="Must match the category name in Artwork (e.g., 'Morocco', 'Brazil')")
+    description = models.TextField()
+    image = models.ImageField(upload_to='countries/', blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Countries"
+
+    def __str__(self):
+        return self.name

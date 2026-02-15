@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Artwork, Artist, Activity
+from .models import Artwork, Artist, Activity, Country
 
 def home(request):
     latest_activities = Activity.objects.all()[:3]
@@ -7,12 +7,18 @@ def home(request):
 
 def projects(request):
     # Get list of countries from choices
-    countries = [choice[0] for choice in Artwork.CATEGORY_CHOICES]
+    # Get list of countries
+    countries = Country.objects.all()
     return render(request, 'core/projects.html', {'countries': countries})
 
 def project_list_by_country(request, category):
-    artworks = Artwork.objects.filter(category=category)
-    return render(request, 'core/project_list.html', {'artworks': artworks, 'category': category})
+    artworks = Artwork.objects.filter(country__name=category)
+    country = Country.objects.filter(name=category).first()
+    return render(request, 'core/project_list.html', {
+        'artworks': artworks,
+        'category': category,
+        'country': country
+    })
 
 def artwork_detail(request, pk):
     artwork = get_object_or_404(Artwork, pk=pk)
